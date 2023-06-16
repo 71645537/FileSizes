@@ -40,7 +40,7 @@ For example:
 
 ```
 "C:\Users\admin\Documents\Dry Cactus" ..................... 1 MB
-"C:\Users\admin\Documents\Green Turtle" ........................ 553 KB
+"C:\Users\admin\Documents\Green Turtle" ................. 553 KB
 ```
 
 If any errors occur during the calculation, they will be displayed at the end of the output, following a horizontal line (`------`). The error messages will indicate the path that failed and the specific error encountered.
@@ -82,7 +82,6 @@ The program utilizes the following libraries:
 
 There are some features planned ahead
 - Print into tree
-- Instead of full path, use current path for shorter output
 
 ## License
 

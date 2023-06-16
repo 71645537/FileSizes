@@ -69,7 +69,7 @@ std::uintmax_t directorySize(const std::filesystem::path& path)
     catch (std::filesystem::filesystem_error& e) {
         //Catch the error so the program may contine, errors will be printed at the end
         //TODO: might be redundant, however this is safer
-        errors.push_back(path.string() + " ... " + "FAILED: " + e.code().message());
+        errors.push_back("\"" + path.filename().string() + "\"" + " ... " + "FAILED: " + e.code().message());
     }
     return totalSize;
 }
@@ -107,12 +107,13 @@ int main(int argc, char* argv[])
     {
         if (!running)
             break;
-
+        std::string dirIndicator = "";
         std::uintmax_t size = 0;
         try {
             if (entry.is_directory())
             {
                 //If is directory, need recursion
+                dirIndicator = "\\";
                 size = directorySize(entry.path());
             }
             else if (entry.is_regular_file())
@@ -123,11 +124,12 @@ int main(int argc, char* argv[])
         }
         catch (std::filesystem::filesystem_error& e) {
             //Errors will be pushed to the back of the "errors" vector
-            errors.push_back(entry.path().string() + " ...... " + "FAILED: " + e.code().message());
+            //This is redundant
+            errors.push_back("\"" + entry.path().filename().string() + dirIndicator + "\"" + " ...... " + "FAILED: " + e.code().message());
             continue;
         }
         //Record the information processed
-        sortedPaths.insert(std::make_pair(size, entry.path()));
+        sortedPaths.insert(std::make_pair(size, "\"" + entry.path().filename().string() + dirIndicator + "\""));
     }
 
     //Handles printing here, these are used for alignment, go through all recorded files
